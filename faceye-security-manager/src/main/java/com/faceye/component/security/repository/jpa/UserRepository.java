@@ -10,7 +10,6 @@ import com.faceye.feature.repository.jpa.BaseRepository;
  * haipenge@gmail.com
 *  Create Date:2014年5月20日
  */
-@Repository
 public interface UserRepository extends BaseRepository<User,Long> {
 	/**
 	 * 根据用户名查找用户

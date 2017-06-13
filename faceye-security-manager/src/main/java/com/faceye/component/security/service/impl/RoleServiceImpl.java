@@ -37,13 +37,13 @@ public class RoleServiceImpl extends BaseServiceImpl<Role, Long, RoleRepository>
 	}
 	
 	@Override
-	public void remove(Long id) throws ServiceException {
+	public void remove(Long id)  {
              Role role=this.get(id);
              this.remove(role);
 	}
 
 	@Override
-	public void remove(Role entity) throws ServiceException {
+	public void remove(Role entity)  {
 		dao.delete(entity);
 	}
 
@@ -73,6 +73,12 @@ public class RoleServiceImpl extends BaseServiceImpl<Role, Long, RoleRepository>
 	   }
 	   role.setResources(resources);
 	   this.dao.save(role);
+	}
+
+	@Override
+	public Role getRoleByName(String name) {
+		// TODO Auto-generated method stub
+		return this.dao.getRoleByName(name);
 	}
 	
 	

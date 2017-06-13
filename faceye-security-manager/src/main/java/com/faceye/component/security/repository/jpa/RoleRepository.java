@@ -10,5 +10,5 @@ import com.faceye.feature.repository.jpa.BaseRepository;
  */
 public interface RoleRepository extends BaseRepository<Role,Long> {
 	
-	
+	public Role getRoleByName(String name);
 }/**@generate-repository-source@**/

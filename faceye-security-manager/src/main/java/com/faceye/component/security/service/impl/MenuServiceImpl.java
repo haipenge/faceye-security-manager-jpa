@@ -39,12 +39,12 @@ public class MenuServiceImpl extends BaseServiceImpl<Menu, Long, MenuRepository>
 	 * 删除一个菜单
 	 */
 	@Override
-	public void remove(Long id) throws ServiceException {
+	public void remove(Long id) {
 		Menu menu =this.get(id);
 		this.remove(menu);
 	}
 	@Override
-	public void remove(Menu entity) throws ServiceException{
+	public void remove(Menu entity){
 //		Resource resource=entity.getResource();
 //		this.resourceService.remove(resource);
 //		entity.setRoles(new HashSet<Role>(0));
