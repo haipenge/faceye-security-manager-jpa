@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.aop.support.AopUtils;
 
 import com.faceye.component.security.service.SecurityInitService;
 import com.faceye.test.feature.service.BaseServiceTestCase;

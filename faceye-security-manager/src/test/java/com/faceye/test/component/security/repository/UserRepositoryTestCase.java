@@ -1,10 +1,16 @@
 package com.faceye.test.component.security.repository;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.apache.commons.lang3.StringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,6 +36,8 @@ public class UserRepositoryTestCase extends BaseRepositoryTestCase {
 	
 	@Autowired
 	private RoleRepository roleRepository=null;
+	@Autowired
+	private DataSource dataSource=null;
 
 	@Before
 	public void before() throws Exception {
@@ -92,5 +100,29 @@ public class UserRepositoryTestCase extends BaseRepositoryTestCase {
 		
 	}
 	
+	@Test
+	public void showDatabases() throws Exception {
+		String sql = "show databases;";
+		if (dataSource != null) {
+			Connection conn = this.dataSource.getConnection();
+			Statement stmt = conn.createStatement();
+			stmt.executeQuery(sql);
+			ResultSet rs = stmt.getResultSet();
+			if (rs.next()) {
+				String db = rs.getString(1);
+				logger.debug(">>FaceYe db is:" + db);
+				Assert.isTrue(StringUtils.isNotEmpty(db));
+
+			} else {
+				Assert.isTrue(1 > 2);
+			}
+			rs.close();
+			stmt.close();
+			conn.close();
+		} else {
+			Assert.isTrue(1 > 2);
+		}
+
+	}
 
 }

@@ -9,8 +9,12 @@ import org.apache.commons.collections.CollectionUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
 import com.faceye.component.security.entity.User;
@@ -62,6 +66,7 @@ public class UserServiceTestCase extends BaseServiceTestCase {
 	 * 2014年5月20日
 	 */
 	@Test
+	@Rollback(true)
 	public void testSave() throws Exception {
 		User entity = new User();
 		this.userService.save(entity);

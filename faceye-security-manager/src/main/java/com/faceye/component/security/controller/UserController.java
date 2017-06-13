@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
-import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,9 +22,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.faceye.component.security.entity.Role;
 import com.faceye.component.security.entity.User;
 import com.faceye.component.security.service.RoleService;
+import com.faceye.component.security.service.SecurityInitService;
 import com.faceye.component.security.service.UserService;
 import com.faceye.component.security.util.PasswordEncoder;
 import com.faceye.feature.controller.BaseController;
+import com.faceye.feature.util.AjaxResult;
 import com.faceye.feature.util.http.HttpUtil;
 import com.faceye.feature.util.security.EncryptUtil;
 
@@ -36,6 +37,8 @@ public class UserController extends BaseController<User, Long, UserService> {
 	// 注册用户的角色ID，为注册用户分配一个默认角色
 	@Value("#{property['faceye.manager.user.register.role.id']}")
 	private String registerRoleId = "";
+	@Autowired
+	private SecurityInitService securityInitService = null;
 
 	@Autowired
 	private RoleService roleService = null;
@@ -75,10 +78,11 @@ public class UserController extends BaseController<User, Long, UserService> {
 		}
 		return "security.user.update";
 	}
+
 	@RequestMapping("/profile/{username}")
-	public String profile(@PathVariable("username")String username,Model model){
-		if(StringUtils.isNotEmpty(username)){
-			User entity=this.service.getUserByUsername(username);
+	public String profile(@PathVariable("username") String username, Model model) {
+		if (StringUtils.isNotEmpty(username)) {
+			User entity = this.service.getUserByUsername(username);
 			model.addAttribute("user", entity);
 		}
 		return "security.user.update";
@@ -86,12 +90,11 @@ public class UserController extends BaseController<User, Long, UserService> {
 
 	/**
 	 * 转向新增页面
+	 * 
 	 * @todo
 	 * @param model
 	 * @return
-	 * @author:@haipenge
-	 * haipenge@gmail.com
-	 * 2014年5月27日
+	 * @author:@haipenge haipenge@gmail.com 2014年5月27日
 	 */
 	@RequestMapping(value = "/input")
 	public String input(Model model) {
@@ -104,9 +107,9 @@ public class UserController extends BaseController<User, Long, UserService> {
 	@RequestMapping("/save")
 	public String save(User entity, RedirectAttributes redirectAttributes) {
 		String password = entity.getPassword();
-		String encryptPassword=EncryptUtil.encrypt(password);
-		
-		String encodingPassword = PasswordEncoder.encoder(password,entity.getUsername());
+		String encryptPassword = EncryptUtil.encrypt(password);
+
+		String encodingPassword = PasswordEncoder.encoder(password, entity.getUsername());
 		if (entity.getId() == null) {
 			entity.setPassword(encodingPassword);
 			entity.setEncryptPassword(encryptPassword);
@@ -127,7 +130,7 @@ public class UserController extends BaseController<User, Long, UserService> {
 	@RequestMapping("/doRegister")
 	public String doRegister(User entity) {
 		String password = entity.getPassword();
-		String encodingPassword = PasswordEncoder.encoder(password,entity.getUsername());
+		String encodingPassword = PasswordEncoder.encoder(password, entity.getUsername());
 		if (entity.getId() == null) {
 			entity.setPassword(encodingPassword);
 			Role role = this.roleService.get(Long.parseLong(registerRoleId));
@@ -160,13 +163,12 @@ public class UserController extends BaseController<User, Long, UserService> {
 
 	/**
 	 * 取得数据明细
+	 * 
 	 * @todo
 	 * @param id
 	 * @param model
 	 * @return
-	 * @author:@haipenge
-	 * haipenge@gmail.com
-	 * 2014年5月26日
+	 * @author:@haipenge haipenge@gmail.com 2014年5月26日
 	 */
 	@RequestMapping("/detail/{id}")
 	public String detail(@PathVariable Long id, Model model) {
@@ -179,11 +181,10 @@ public class UserController extends BaseController<User, Long, UserService> {
 
 	/**
 	 * 给用户授权
+	 * 
 	 * @todo
 	 * @return
-	 * @author:@haipenge
-	 * haipenge@gmail.com
-	 * 2014年6月23日
+	 * @author:@haipenge haipenge@gmail.com 2014年6月23日
 	 */
 	@RequestMapping(value = "/authRoles")
 	public String authRoles(HttpServletRequest request, @RequestParam Long userId, @RequestParam Long[] roleIds) {
@@ -193,13 +194,12 @@ public class UserController extends BaseController<User, Long, UserService> {
 
 	/**
 	 * 准备为用户授于角色权限
+	 * 
 	 * @todo
 	 * @param id
 	 * @param model
 	 * @return
-	 * @author:@haipenge
-	 * haipenge@gmail.com
-	 * 2014年6月27日
+	 * @author:@haipenge haipenge@gmail.com 2014年6月27日
 	 */
 	@RequestMapping("/prepareAuthRoles/{id}")
 	public String perpareAuthRoles(@PathVariable Long id, Model model) {
@@ -214,16 +214,14 @@ public class UserController extends BaseController<User, Long, UserService> {
 
 	/**
 	 * 判断用户注册时用户名与电子邮件是否可用
+	 * 
 	 * @todo
 	 * @return
-	 * @author:@haipenge
-	 * haipenge@gmail.com
-	 * 2014年6月27日
+	 * @author:@haipenge haipenge@gmail.com 2014年6月27日
 	 */
 	@RequestMapping("/isUserNameAndEmailExist")
 	@ResponseBody
-	public UsernameAndPasswordValidator isUsernameAndEmailExist(@RequestParam("username") String username,
-			@RequestParam("email") String email) {
+	public UsernameAndPasswordValidator isUsernameAndEmailExist(@RequestParam("username") String username, @RequestParam("email") String email) {
 		UsernameAndPasswordValidator validator = new UsernameAndPasswordValidator();
 		User user = this.service.getUserByUsername(username);
 		if (user != null) {
@@ -237,11 +235,19 @@ public class UserController extends BaseController<User, Long, UserService> {
 		return validator;
 	}
 
+	@RequestMapping("/initSecurity")
+	@ResponseBody
+	public String initSecurity(HttpServletRequest request) {
+		if (!this.securityInitService.isInited()) {
+			this.securityInitService.init();
+		}
+		return AjaxResult.getInstance().buildDefaultResult(true);
+	}
+
 	/**
 	 * 用户名与邮箱唯一性校验
-	 * @author @haipenge 
-	 * haipenge@gmail.com
-	*  Create Date:2014年6月27日
+	 * 
+	 * @author @haipenge haipenge@gmail.com Create Date:2014年6月27日
 	 */
 	class UsernameAndPasswordValidator {
 		private Boolean isUsernameExist = Boolean.FALSE;

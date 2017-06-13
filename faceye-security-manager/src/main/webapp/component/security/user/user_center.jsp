@@ -7,6 +7,9 @@
 		<a class="btn btn-primary" href="<c:url value="/security/user/input"/>"> <fmt:message
 				key="security.user.add"></fmt:message>
 		</a>
+		<a href="#" class ="btn btn-primay pull-right" id="init-security">
+		  Init Security
+		</a>
 	</h2>
 </div>
 <div class="cl-mcont">
