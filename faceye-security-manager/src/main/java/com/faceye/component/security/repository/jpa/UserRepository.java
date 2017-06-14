@@ -1,8 +1,7 @@
 package com.faceye.component.security.repository.jpa;
 
-import org.springframework.stereotype.Repository;
-
 import com.faceye.component.security.entity.User;
+import com.faceye.component.security.repository.jpa.custom.UserRepositoryCustom;
 import com.faceye.feature.repository.jpa.BaseRepository;
 /**
  * User 实体DAO
@@ -10,7 +9,7 @@ import com.faceye.feature.repository.jpa.BaseRepository;
  * haipenge@gmail.com
 *  Create Date:2014年5月20日
  */
-public interface UserRepository extends BaseRepository<User,Long> {
+public interface UserRepository extends BaseRepository<User,Long>,UserRepositoryCustom {
 	/**
 	 * 根据用户名查找用户
 	 * @todo

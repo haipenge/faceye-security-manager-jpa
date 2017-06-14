@@ -1,6 +1,7 @@
 package com.faceye.component.security.repository.jpa;
 
 import com.faceye.component.security.entity.Resource;
+import com.faceye.component.security.repository.jpa.custom.ResourceRepositoryCustom;
 import com.faceye.feature.repository.jpa.BaseRepository;
 /**
  * Resource 实体DAO
@@ -8,7 +9,7 @@ import com.faceye.feature.repository.jpa.BaseRepository;
  * haipenge@gmail.com
 *  Create Date:2014年5月20日
  */
-public interface ResourceRepository extends BaseRepository<Resource,Long> {
+public interface ResourceRepository extends BaseRepository<Resource,Long>,ResourceRepositoryCustom {
 	
 	/**
 	 * 根据URL地址取得Resource 对像

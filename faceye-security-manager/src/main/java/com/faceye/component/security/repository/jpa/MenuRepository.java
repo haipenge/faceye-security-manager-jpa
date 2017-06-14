@@ -4,9 +4,9 @@ package com.faceye.component.security.repository.jpa;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
 import com.faceye.component.security.entity.Menu;
+import com.faceye.component.security.repository.jpa.custom.UserRepositoryCustom;
 import com.faceye.feature.repository.jpa.BaseRepository;
 /**
  * Menu 实体DAO
@@ -14,7 +14,7 @@ import com.faceye.feature.repository.jpa.BaseRepository;
  * haipenge@gmail.com
 *  Create Date:2014年5月20日
  */
-public interface MenuRepository extends BaseRepository<Menu,Long> {
+public interface MenuRepository extends BaseRepository<Menu,Long>,UserRepositoryCustom {
 	 
 	/**
 	 * 查询子节点
