@@ -11,6 +11,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.faceye.component.security.entity.Menu;
 import com.faceye.component.security.entity.Resource;
@@ -21,7 +22,7 @@ import com.faceye.component.security.service.ResourceService;
 import com.faceye.component.security.service.RoleService;
 import com.faceye.component.security.service.SecurityInitService;
 import com.faceye.component.security.service.UserService;
-import com.faceye.component.security.util.PasswordEncoder;
+import com.faceye.component.security.util.PasswordEncoderUtil;
 
 @Service()
 public class SecurityInitServiceImpl implements SecurityInitService {
@@ -54,6 +55,7 @@ public class SecurityInitServiceImpl implements SecurityInitService {
 		return res;
 	}
 
+	@Transactional
 	@Override
 	public void init() {
 		this.initRoles();
@@ -95,7 +97,7 @@ public class SecurityInitServiceImpl implements SecurityInitService {
 			searchParams.put("EQ|username", username);
 			Page<User> users = this.userService.getPage(searchParams, 1, 5);
 			if (users == null || CollectionUtils.isEmpty(users.getContent())) {
-				String encodingPassword = PasswordEncoder.encoder("admin","admin");
+				String encodingPassword = PasswordEncoderUtil.encoder("admin");
 				Set<Role> roles = new HashSet<Role>(0);
 				User user = new User();
 				user.setUsername("admin");
@@ -208,6 +210,7 @@ public class SecurityInitServiceImpl implements SecurityInitService {
 			menu.setName(name);
 			menu.setParent(null);
 			menu.setType(1);
+			menu.setResource(null);
 			this.menuService.save(menu);
 		} else {
 			menu = page.getContent().get(0);

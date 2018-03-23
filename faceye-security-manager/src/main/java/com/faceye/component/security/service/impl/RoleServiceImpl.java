@@ -18,7 +18,7 @@ import com.faceye.component.security.repository.jpa.ResourceRepository;
 import com.faceye.component.security.repository.jpa.RoleRepository;
 import com.faceye.component.security.service.RoleService;
 import com.faceye.feature.service.impl.BaseServiceImpl;
-import com.faceye.feature.util.ServiceException;
+ 
 /**
  * 角色服务类
  * @author @haipenge 
@@ -62,12 +62,12 @@ public class RoleServiceImpl extends BaseServiceImpl<Role, Long, RoleRepository>
 
 	@Override
 	public void saveRoleAuthResources(Long roleId, Long[] resourceIds) {
-	   Role role=this.dao.findOne(roleId);
+	   Role role=this.dao.getOne(roleId);
 	   Set<Resource> resources=role.getResources();
 	   resources.clear();
 	   if(resourceIds!=null &&resourceIds.length>0){
 		   for(Long resourceId:resourceIds){
-			   Resource resource=this.resourceRepository.findOne(resourceId);
+			   Resource resource=this.resourceRepository.getOne(resourceId);
 			   resources.add(resource);
 		   }
 	   }

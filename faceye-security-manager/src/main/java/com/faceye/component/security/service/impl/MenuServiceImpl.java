@@ -20,7 +20,7 @@ import com.faceye.component.security.service.MenuService;
 import com.faceye.component.security.service.ResourceService;
 import com.faceye.component.security.service.RoleService;
 import com.faceye.feature.service.impl.BaseServiceImpl;
-import com.faceye.feature.util.ServiceException;
+ 
 
 @Service
 @Transactional
@@ -84,7 +84,7 @@ public class MenuServiceImpl extends BaseServiceImpl<Menu, Long, MenuRepository>
 				this.roleService.save(role);
 			} else {
 				for (long menuId : menuIds) {
-					Menu menu = this.dao.findOne(menuId);
+					Menu menu = this.dao.getOne(menuId);
 					if (!menus.contains(menu)) {
 						menus.add(menu);
 						Resource resource = menu.getResource();
@@ -123,7 +123,7 @@ public class MenuServiceImpl extends BaseServiceImpl<Menu, Long, MenuRepository>
 		}
 		menu.setResource(resource);
 		if(parentId!=null){
-			Menu parent=this.dao.findOne(parentId);
+			Menu parent=this.dao.getOne(parentId);
 			menu.setParent(parent);
 		}
 		this.dao.save(menu);

@@ -16,7 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.util.Assert;
+import org.junit.Assert;
 
 import com.faceye.component.security.entity.Role;
 import com.faceye.component.security.entity.User;
@@ -53,7 +53,7 @@ public class UserRepositoryTestCase extends BaseRepositoryTestCase {
 	public void testSave() throws Exception {
 		
 		for (int i = 0; i < 100; i++) {
-			Role role=this.roleRepository.findOne(11L);
+			Role role=this.roleRepository.getOne(11L);
 			User entity = new User();
 			entity.setUsername("test-"+i);
 			Set<Role> roles=new HashSet<Role>(0);
@@ -62,30 +62,30 @@ public class UserRepositoryTestCase extends BaseRepositoryTestCase {
 			this.userRepository.save(entity);
 		}
 		Iterable<User> entities = this.userRepository.findAll();
-		Assert.isTrue(entities.iterator().hasNext());
+		Assert.assertTrue(entities.iterator().hasNext());
 	}
 
 	@Test
 	public void testDelete() throws Exception {
 		User entity = new User();
 		this.userRepository.save(entity);
-		this.userRepository.delete(entity.getId());
+		this.userRepository.deleteById(entity.getId());
 		Iterable<User> entities = this.userRepository.findAll();
-		Assert.isTrue(!entities.iterator().hasNext());
+		Assert.assertTrue(!entities.iterator().hasNext());
 	}
 
 	@Test
 	public void testFindOne() throws Exception {
 		User entity = new User();
 		this.userRepository.save(entity);
-		User user = this.userRepository.findOne(entity.getId());
-		Assert.isTrue(user != null);
+		User user = this.userRepository.getOne(entity.getId());
+		Assert.assertTrue(user != null);
 	}
 	
 	@Test
 	public void testGetPage() throws Exception {
 		Page page=this.userRepository.getPage(null, 1, 25);
-		Assert.isTrue(page != null && page.getTotalElements() == 201 && page.getNumberOfElements() == 25);
+		Assert.assertTrue(page != null && page.getTotalElements() == 201 && page.getNumberOfElements() == 25);
 
 	}
 	
@@ -96,7 +96,7 @@ public class UserRepositoryTestCase extends BaseRepositoryTestCase {
 		Map params=new HashMap();
 		params.put("LIKE|user.name", "-11");
 		Page page=this.userRepository.getPage(params,sql.toString(), "Auth", 1, 100);
-		Assert.isTrue(page!=null &&page.getSize()==100);
+		Assert.assertTrue(page!=null &&page.getSize()==100);
 		
 	}
 	
@@ -111,16 +111,16 @@ public class UserRepositoryTestCase extends BaseRepositoryTestCase {
 			if (rs.next()) {
 				String db = rs.getString(1);
 				logger.debug(">>FaceYe db is:" + db);
-				Assert.isTrue(StringUtils.isNotEmpty(db));
+				Assert.assertTrue(StringUtils.isNotEmpty(db));
 
 			} else {
-				Assert.isTrue(1 > 2);
+				Assert.assertTrue(1 > 2);
 			}
 			rs.close();
 			stmt.close();
 			conn.close();
 		} else {
-			Assert.isTrue(1 > 2);
+			Assert.assertTrue(1 > 2);
 		}
 
 	}

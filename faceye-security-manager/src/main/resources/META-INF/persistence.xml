@@ -11,8 +11,8 @@
 		 <class>com.faceye.component.security.entity.Role</class>
 		 <class>com.faceye.component.security.entity.Resource</class>
 		 <class>com.faceye.component.security.entity.User</class>
-		 <class>com.faceye.component.security.entity.Menu</class>
-		  -->
+		 <class>com.faceye.component.security.entity.Menu</class>-->
+		  
 		<!-- 如果使用nativeSQL查询，启用以下配置 -->
 		<!-- <mapping-file>META-INF/mappers.xml</mapping-file> -->
 	</persistence-unit>

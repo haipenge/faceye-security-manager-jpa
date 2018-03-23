@@ -10,9 +10,9 @@
 	</appender>
 	<appender name="rollingFile"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${log.dir}/faceye-security-search-all-log.log</file>
+		<file>${log.dir}/faceye-security-manager-all-log.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${log.dir}/faceye-security-search-all-log.%d{yyyy-MM-dd}.log
+			<fileNamePattern>${log.dir}/faceye-security-manager-all-log.%d{yyyy-MM-dd}.log
 			</fileNamePattern>
 		</rollingPolicy>
 		<encoder>
@@ -28,9 +28,9 @@
 
 	<appender name="info-rollingFile"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${log.dir}/faceye-security-search-info-log.log</file>
+		<file>${log.dir}/faceye-security-manager-info-log.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${log.dir}/faceye-security-search-info-log.%d{yyyy-MM-dd}.log
+			<fileNamePattern>${log.dir}/faceye-security-manager-info-log.%d{yyyy-MM-dd}.log
 			</fileNamePattern>
 			<MaxHistory>30</MaxHistory>
 		</rollingPolicy>
@@ -48,9 +48,9 @@
 
 	<appender name="debug-rollingFile"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${log.dir}/faceye-security-search-debug-log.log</file>
+		<file>${log.dir}/faceye-security-manager-debug-log.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${log.dir}/faceye-security-search-debug-log.%d{yyyy-MM-dd}.log
+			<fileNamePattern>${log.dir}/faceye-security-manager-debug-log.%d{yyyy-MM-dd}.log
 			</fileNamePattern>
 			<MaxHistory>30</MaxHistory>
 		</rollingPolicy>
@@ -71,9 +71,9 @@
 
 	<appender name="error-rollingFile"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${log.dir}/faceye-security-search-error-log.log</file>
+		<file>${log.dir}/faceye-security-manager-error-log.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${log.dir}/faceye-security-search-error-log.%d{yyyy-MM-dd}.log
+			<fileNamePattern>${log.dir}/faceye-security-manager-error-log.%d{yyyy-MM-dd}.log
 			</fileNamePattern>
 			<MaxHistory>30</MaxHistory>
 		</rollingPolicy>
@@ -92,9 +92,9 @@
 
 	<appender name="warn-rollingFile"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${log.dir}/faceye-security-search-warn-log.log</file>
+		<file>${log.dir}/faceye-security-manager-warn-log.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${log.dir}/faceye-security-search-warn-log.%d{yyyy-MM-dd}.log
+			<fileNamePattern>${log.dir}/faceye-security-manager-warn-log.%d{yyyy-MM-dd}.log
 			</fileNamePattern>
 		</rollingPolicy>
 		<encoder>
@@ -125,7 +125,7 @@
 	<logger name="info-rollingFile" level="INFO" additivity="false">
 		<appender-ref ref="info-rollingFile" />
 	</logger>
-	<logger name="org" level="error"></logger>
+	<logger name="org" level="${x.logger.level}"></logger>
 
 	<root level="${x.logger.level}">
 		<appender-ref ref="console" />

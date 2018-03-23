@@ -15,7 +15,7 @@ public class ContextTestCase {
 	private String beanName="";
 	@Before
 	public void set() throws Exception{
-		beanName="userServiceImpl";
+		beanName="userServiceImpl"; 
 	}
 	@After
 	public void after() throws Exception{}
@@ -23,7 +23,7 @@ public class ContextTestCase {
 	@Test
 	public void getBean() throws Exception{
 		Object bean=ContextLoader.getInstance().getBean(beanName);
-		Assert.isTrue(bean!=null);
+		Assert.assertTrue(bean!=null);
 	}
 	
 }

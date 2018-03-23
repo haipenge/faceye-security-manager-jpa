@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.util.Assert;
+import org.junit.Assert;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"classpath*:/applicationContext.xml"})
@@ -29,14 +29,14 @@ public class DataSourceTestCase  extends AbstractTransactionalJUnit4SpringContex
 			while (rs.next()) {
 				String db = rs.getString(1);
 				logger.debug(">>FaceYe db is:" + db);
-				Assert.isTrue(StringUtils.isNotEmpty(db));
+				Assert.assertTrue(StringUtils.isNotEmpty(db));
 
 			}
 			rs.close();
 			stmt.close();
 			conn.close();
 		} else {
-			Assert.isTrue(dataSource!=null);
+			Assert.assertTrue(dataSource!=null);
 		}
 
 	}
