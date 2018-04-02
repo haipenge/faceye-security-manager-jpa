@@ -10,7 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.TextEscapeUtils;
-import org.junit.Assert;
+import org.springframework.util.Assert;
 /**
  * 适用于ajax方式的用户登录
  * @author @haipenge 
